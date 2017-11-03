@@ -1,0 +1,9 @@
+--- # PING MODULE EXAMPLE
+- hosts: all
+  user: test
+  connection: ssh
+  gather_facts: no
+  tasks:
+    - name: Ping all the hosts
+      ping: 
+

@@ -1,0 +1,8 @@
+--- # SCRIPT MODULE EXAMPLE
+- hosts: apacheweb
+  user: test
+  connection: ssh
+  sudo: yes
+  gather_facts: no
+  tasks:
+  - script: /home/test/Playbooks/system_uptime.sh creates=/home/test/uptime.log

@@ -1,0 +1,11 @@
+--- # Master Playbook demonstrating the delegateto command
+- hosts: apacheweb
+  user: test
+  sudo: yes
+  connection: ssh
+  pre_tasks:
+  - name: Ping the application server 
+    raw: ping -c 4 tcox5 > /home/test/Playbooks/Roles/roles/ping.out
+    delegate_to: 127.0.0.1
+  roles:
+  - webservers

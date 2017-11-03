@@ -1,0 +1,9 @@
+---
+- hosts: 127.0.0.1
+  user: root
+  connection: local
+  gather_facts: no
+  tasks:
+    - name: Showing remote status
+      raw: /usr/bin/uptime > /root/uptime.logt
+

@@ -1,0 +1,9 @@
+--- # GET_URL MODULE EXAMPLE
+- hosts: aptserver
+  user: test
+  sudo: yes
+  connection: ssh
+  gather_facts: no
+  tasks:
+    - name: Get and download the INI file from the web server
+      get_url: url=http://tcox1.mylabserver.com/mytest.ini dest=/home/test/mytest.ini mode=0440

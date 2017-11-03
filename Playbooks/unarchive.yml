@@ -1,0 +1,9 @@
+--- # UNARCHIVE MODULE EXAMPLE
+- hosts: aptserver
+  user: test
+  sudo: yes
+  connection: ssh
+  gather_facts: no
+  tasks:
+    - name: copy and unarchive a file
+      unarchive: src=/home/test/local/test.tar.gz dest=/home/test/local copy=no

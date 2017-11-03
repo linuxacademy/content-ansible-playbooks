@@ -1,0 +1,36 @@
+---
+language: python
+python: "2.7"
+
+notifications:
+  email:
+    on_success: never
+    on_failure: always
+
+env:
+  - SITE="-i inventory tests/main.yml"
+
+install:
+  - pip install ansible>=1.7.0
+
+script:
+  # Prepare tests
+  - echo localhost > inventory
+
+  # Check syntax
+  - ansible-playbook $SITE --syntax-check
+
+  # First run
+  - ansible-playbook $SITE --connection=local
+
+  # Second run Idempotence test
+  - >
+    ansible-playbook $SITE --connection=local
+    | grep -q 'changed=0.*failed=0'
+    && (echo 'Idempotence test: PASS' && exit 0)
+    || (echo 'Idempotence test: FAIL' && exit 1)
+
+  - command curl --help  || exit 1
+  - command wget --help || exit 1
+  - command -v git || exit 1
+  - command -v unzip || exit 1

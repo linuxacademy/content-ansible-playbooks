@@ -1,0 +1,13 @@
+--- # Master Playbook for Web Servers
+- hosts: '{{ hosts }}'
+  user: '{{ user }}'
+  sudo: yes
+  connection: ssh
+  pre_tasks:
+  - name: When did the ROLE start
+    raw: date > /home/test/startofrole.log
+  roles:
+  - { role: '{{ role }}', when: "ansible_os_family == 'RedHat'" }
+  post_tasks:
+  - name: When did the ROLE end
+    raw: date > /home/test/endofrole.log

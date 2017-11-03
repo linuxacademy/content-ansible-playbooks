@@ -1,0 +1,13 @@
+--- # SHELL MODULE EXAMPLE
+- hosts: apacheweb
+  user: test
+  sudo: sudo
+  connection: ssh
+  gather_facts: no
+  tasks:
+    - name: Executing a remote command - uptime
+      shell: /usr/bin/uptime >> uptime.log
+      args:
+        chdir: logs/
+        creates: uptime.log
+

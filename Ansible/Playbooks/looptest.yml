@@ -1,0 +1,10 @@
+--- # LOOP Playbook Example
+- hosts: apacheweb
+  user: test
+  sudo: sudo
+  connection: ssh
+  gather_facts: no
+  tasks:
+    - name: Add a list of users
+      user: name=user1 state=present
+

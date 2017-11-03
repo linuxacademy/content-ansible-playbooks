@@ -1,0 +1,18 @@
+--- # MASTER ROLE FILE FOR TESTROLE
+- hosts: apacheweb
+  user: test
+  sudo: yes
+  connection: ssh
+  pre_tasks:
+  - name: date/time stamp for when the playbook starts
+    command: /usr/bin/date
+    register: timestamp_start
+  - debug: var=timestamp_start
+  roles:
+  - testrole
+  post_tasks:
+  - name: date/time stamp for when the playbook ends
+    command: /usr/bin/date
+    register: timestamp_end
+  - debug: var=timestamp_end
+

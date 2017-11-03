@@ -1,0 +1,10 @@
+--- # SEBOOLEAN MODULE EXAMPLE
+- hosts: apacheweb
+  user: test
+  sudo: yes
+  connection: ssh
+  gather_facts: no
+  tasks:
+    - name: Change Boolean for Anonymous Writes on the Web Server
+      seboolean: name=httpd_anon_write state=yes persistent=yes
+

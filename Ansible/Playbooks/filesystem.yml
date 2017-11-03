@@ -1,0 +1,9 @@
+--- # FILESYSTEM MODULE EXAMPLE
+- hosts: appserver
+  user: test
+  sudo: yes
+  connection: ssh
+  gather_facts: no
+  tasks:
+    - name: Format the remote data partition
+      filesystem: fstype=ext3 dev=/dev/xvdf1

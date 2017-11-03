@@ -1,0 +1,14 @@
+--- # Master Playbook for Role Based DB Server Deployments
+- hosts: appserver
+  user: test
+  sudo: yes
+  connection: ssh
+  gather_facts: yes
+  pre_tasks:
+  - name: When did the ROLE start
+    raw: date > /home/test/startofrole.log
+  roles:
+  - mariadb.server
+  post_tasks:
+  - name: When did the ROLE end
+    raw: date > /home/test/endofrole.log

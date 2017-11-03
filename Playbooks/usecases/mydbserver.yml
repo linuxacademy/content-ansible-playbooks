@@ -1,0 +1,39 @@
+--- # DATABASE DEPLOYMENT EXAMPLE
+- hosts: appserver
+  user: test
+  sudo: yes
+  connection: ssh
+  gather_facts: yes
+  vars:
+    dbserver_pkg: mariadb-server
+    dbcllient_pkg: mariadb
+    dbserver_fqdn: tcox5.mylabserver.com
+    dbinstalldir: /var/lib
+    dbinstancename: MyDBTest
+    dbdistribution: RedHat
+    dbversion: 5.5.44
+  tasks:
+  - name: Install the MariaDB Server
+    yum: pkg=mariadb-server state=latest
+  - name: Install the MariaDB Client Utilities
+    yum: pkg=mariadb state=latest
+  - name: Start the DB Service
+    service: name=mariadb state=started
+  - pause: prompt="Please run the mysql_secure_installation binary and then press ENTER for the playbook to continue"
+  - name: Restart the DB Service
+    service: name=mariadb state=restarted
+  - name: Copy the remote database in order to restore
+    copy: src=files/mysqlbkup.sql dest=/var/lib/mysqlbkup.sql owner=root group=root mode=755
+  - name: Create the remote database instance
+    shell: mysqladmin -u root -ppassword123 create MyDBTest
+  - name: Import the database backup to the live DB
+    shell: mysql -u root -ppassword123 MyDBTest < /var/lib/mysqlbkup.sql
+    register: result
+  - debug: var=result
+  - name: Add a backup CRON job to run every day at midnight
+    cron: name="DBBackup" minute="0" hour="0" job="mysqldump -u root -ppassword123 --databases MyDBTest > dbbkup.sql"
+  - name: Run a Quick SQL Command to be sure everything was created and is working
+    shell: mysql -u root -ppassword123 -e 'SHOW DATABASES;'
+    register: mysqlresult
+  - debug: var=mysqlresult
+

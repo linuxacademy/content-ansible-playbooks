@@ -1,0 +1,13 @@
+- hosts: appserver
+  tasks:
+  - name: Install Lynx on App Servers
+    yum: pkg=lynx state=installed update_cache=true
+  - name: Querying for Telnet Install
+    yum: pkg=telnet state=present update_cache=true 
+
+- hosts: apacheweb
+  tasks:
+  - name: Install Lynx on Web Servers
+    yum: pkg=telnet state=installed update_cache=true
+  - name: Querying for Lynx Install
+    yum: pkg=lynx state=present update_cache=true

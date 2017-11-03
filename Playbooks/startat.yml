@@ -1,0 +1,13 @@
+--- # START AT PLAYBOOK EXAMPLE
+- hosts: apacheweb
+  user: test
+  sudo: yes
+  connection: ssh
+  gather_facts: no
+  tasks:
+  - name: Install Telnet
+    yum: pkg=telnet state=latest
+  - name: Install Lynx
+    yum: pkg=lynx state=latest
+  - name: Install at
+    yum: pkg=at state=latest

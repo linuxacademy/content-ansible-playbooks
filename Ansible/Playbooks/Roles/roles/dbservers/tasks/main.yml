@@ -1,0 +1,4 @@
+- name: Python MysQL Support Libraries
+  yum: pkg=MySQL-python state=latest
+- name: Create a New DB called OurTestDB
+  mysql_db: name=OurTestDB state=absent login_user=root login_password=password123

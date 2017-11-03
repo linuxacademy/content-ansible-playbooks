@@ -1,0 +1,10 @@
+--- # MODPROBE MODULE EXAMPLE
+- hosts: appserver
+  user: test
+  sudo: yes
+  connection: ssh
+  gather_facts: no
+  tasks:
+    - name: Add the dummy module to the remote kerneL
+      modprobe: name=dummy state=absent
+

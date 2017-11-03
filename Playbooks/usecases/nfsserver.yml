@@ -1,0 +1,13 @@
+--- # Master Playbook for Role Based NFS Server Deployments
+- hosts: appserver
+  user: test
+  sudo: yes
+  connection: ssh
+  pre_tasks:
+  - name: When did the ROLE start
+    raw: date > /home/test/startofrole.log
+  roles:
+  - nfs.server
+  post_tasks:
+  - name: When did the ROLE end
+    raw: date > /home/test/endofrole.log

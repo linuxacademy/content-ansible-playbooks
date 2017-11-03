@@ -1,0 +1,19 @@
+--- # EC2 TAG MODULE EXAMPLE
+- hosts: localhost
+  connection: local
+  remote_user: test
+  become: yes
+  gather_facts: no
+  vars_files:
+  - files/awscreds.yml
+  tasks: 
+  - name: Label an existing volume so we know what it is
+    ec2_tag:
+      aws_access_key: "{{ aws_id }}"
+      aws_secret_key: "{{ aws_key }}"
+      region: "{{ aws_region }}"
+      resource: vol-8baa327c
+      state: present
+      tags:
+        Name: data_volume
+    register: voltags

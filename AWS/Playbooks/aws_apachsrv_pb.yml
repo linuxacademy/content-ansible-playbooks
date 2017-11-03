@@ -1,0 +1,59 @@
+--- # Ansible Playbook to Configure Static Web Server and Use it to Create a New Template
+- hosts: aws
+  connection: ssh
+  remote_user: ec2-user
+  become: yes
+  gather_facts: yes
+  tasks:
+  - name: Connect to the remote host, execute yum updates
+    yum: name=* state=latest
+  - name: Install the HTTPD Server
+    yum: name=httpd state=latest
+  - name: Deploy the static website
+    copy: src=../files/index.html dest=/var/www/html/index.html owner=root group=root mode=0655 backup=yes
+  - name: Restart the HTTPD Service
+    service: name=httpd state=restarted
+  - name: Wait for the HTTP port 80 to be listening
+    wait_for: host=ec2-54-200-206-39.us-west-2.compute.amazonaws.com port=80 delay=5
+  - name: Install WGET to test the site
+    yum: name=wget state=latest
+  - name: Test the site
+    shell: /usr/bin/wget http://localhost
+    register: site_result
+  - name: Display the site output results
+    debug: var=site_result
+
+- hosts: localhost
+  connection: local
+  remote_user: test
+  become: yes
+  gather_facts: no
+  vars_files:
+  - ../files/awscreds.yml
+  tasks:
+  - name: Take a snapshot backup of the website directory
+    ec2_snapshot:
+      aws_access_key: "{{ aws_id }}"
+      aws_secret_key: "{{ aws_key }}"
+      region: "{{ aws_region }}"
+      instance_id: i-fea24039
+      device_name: /dev/sdb
+      description: Initial Playbook Static Site Deployment Backup
+      wait: no
+    register: snapshot_results
+  - name: Display the snapshot results
+    debug: var=snapshot_results
+  - name: Create a New Template AMI from our Instance
+    ec2_ami:
+      aws_access_key: "{{ aws_id }}"
+      aws_secret_key: "{{ aws_key }}"
+      region: "{{ aws_region }}"
+      instance_id: i-fea24039
+      wait: no
+      name: myansibleamitemplate223
+      tags:
+        Name: MyNewAnsibleAMITemplate223
+        Service: TestAMITemplatePlaybook223
+    register: ami_results
+  - name: Display the AMI Creation Results
+    debug: var=ami_results

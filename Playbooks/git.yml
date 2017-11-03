@@ -1,0 +1,8 @@
+--- # GIT MODULE EXAMPLE
+- hosts: apacheweb
+  user: test
+  connection: ssh
+  gather_facts: no
+  tasks:
+  - name: Checking out a git repo on the remote server
+    raw: date

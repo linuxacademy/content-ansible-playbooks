@@ -1,0 +1,9 @@
+distribution: RedHat
+nfsutils_pkg: nfs-utils
+nfslibs_pkg: nfs-utils-lib
+nfsserver_service: nfs-server
+nfslock_service: nfs-lock
+nfsmap_service: nfs-idmap
+rpcbind_service: rpcbind
+export_path: /var/share
+client_path: /mnt/remote

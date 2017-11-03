@@ -1,0 +1,10 @@
+--- # HOSTNAME MODULE EXAMPLE
+- hosts: aptserver
+  user: test
+  sudo: yes
+  connection: ssh
+  gather_facts: no
+  tasks: 
+    - name: Change the hostname to something else
+      hostname: name=tcox01
+

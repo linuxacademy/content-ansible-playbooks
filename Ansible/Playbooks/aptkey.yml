@@ -1,0 +1,14 @@
+--- # APT_REPOSITORY MODULE EXAMPLE/ALSO APT_KEY EXAMPLE
+- hosts: aptserver
+  user: test
+  sudo: yes
+  connection: ssh
+  gather_facts: no
+  tasks:
+    - name: Install a dependency needed for apt_repository
+      apt: pkg=python-apt state=latest
+    - name: Add the key
+      apt_key: url=https://dl-ssl.google.com/linux/linux_signing_key.pub state=present
+    - name: Add the Google Repo for Ubuntu
+      apt_repository: repo='deb http://dl.google.com/linux/deb/ stable main non-free' state=present
+

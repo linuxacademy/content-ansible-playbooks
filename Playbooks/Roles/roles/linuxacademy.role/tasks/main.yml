@@ -1,0 +1,20 @@
+---
+- name: Update apt packages
+  apt: update-cache=yes cache_valid_time={{ apt_cache_valid_time }}
+  tags: common
+
+- name: Install supporting packages to manage apt repositories
+  apt: pkg={{ item }} state=latest
+  with_items:
+    - python-software-properties
+  tags: common
+
+- name: Install tools and utility packages
+  apt: pkg={{ item }} state=latest
+  with_items:
+    - wget
+    - curl
+    - unzip
+    - git
+    - g++
+  tags: common

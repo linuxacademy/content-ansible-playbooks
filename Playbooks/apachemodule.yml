@@ -1,0 +1,9 @@
+--- # APACHE2_MODULE EXAMPLE
+- hosts: aptserver
+  user: test
+  sudo: yes
+  connection: ssh
+  gather_facts: no
+  tasks:
+    - name: Disable the alias module in Apache2
+      apache2_module: state=present name=alias

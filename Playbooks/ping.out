@@ -1,0 +1,9 @@
+PING tcox5.mylabserver.com (54.172.197.21) 56(84) bytes of data.
+64 bytes from ec2-54-172-197-21.compute-1.amazonaws.com (54.172.197.21): icmp_seq=1 ttl=63 time=0.813 ms
+64 bytes from ec2-54-172-197-21.compute-1.amazonaws.com (54.172.197.21): icmp_seq=2 ttl=63 time=1.39 ms
+64 bytes from ec2-54-172-197-21.compute-1.amazonaws.com (54.172.197.21): icmp_seq=3 ttl=63 time=1.04 ms
+64 bytes from ec2-54-172-197-21.compute-1.amazonaws.com (54.172.197.21): icmp_seq=4 ttl=63 time=0.894 ms
+
+--- tcox5.mylabserver.com ping statistics ---
+4 packets transmitted, 4 received, 0% packet loss, time 3005ms
+rtt min/avg/max/mdev = 0.813/1.037/1.398/0.224 ms

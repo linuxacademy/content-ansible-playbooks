@@ -1,0 +1,16 @@
+--- # Master Playbook for Web Servers
+- hosts: apacheweb
+  user: test
+  sudo: yes
+  connection: ssh
+  pre_tasks:
+  - name: When did the ROLE start
+    raw: date > /home/test/startofrole.log
+  roles:
+    - webservers
+  post_tasks:
+  - debug: Trigger HTTPD Restart
+    notify: Restart HTTPD
+    changed_when: true
+  - name: When did the ROLE end
+    raw: date > /home/test/endofrole.log

@@ -1,0 +1,54 @@
+--- # DATABASE DEPLOYMENT PLAYBOOK EXAMPLE
+- hosts: appserver
+  user: test
+  sudo: yes
+  connection: ssh
+  gather_facts: yes
+  vars:
+    dbserver_pkg: mariadb-server
+    dbclient_pkg: mariadb
+    dbserver_fqdn: tcox5.mylabserver.com
+    dbinstalldir: /var/lib
+    dbinstancename: MyDBTest
+    dbdistribution: RedHat
+    dbversion: 5.5.44
+  tasks:
+  - name: Install the MariaDB Server
+    yum: pkg={{ item }} state=latest
+    with_items:
+    - "{{ dbserver_pkg }}"
+    - "{{ dbclient_pkg }}"
+    notify: 
+    - StartDBService
+    - RunSecureInstallPause
+    - RestartDBService
+    - CopyBkupFile
+    - CreateRemoteDB
+    - DisplayCreationResults
+    - RestoreRemoteDB
+    - TestDBResults
+    - ShowDBResults
+  - name: Add a backup CRON job to run every day at midnight
+    cron:  name="DBBackup" minute="0" hour="0" job="mysqldump -u root -ppassword123 --databases {{ dbinstancename }} > dbbkup.sql" 
+  handlers:
+  - name: StartDBService
+    service: name={{ dbclient_pkg }} state=started
+  - name: RunSecureInstallPause
+    pause: prompt="Please Run mysql_secure_installation binary and press ENTER - Playbook will restart DB Service..."
+  - name: RestartDBService
+    service: name={{ dbclient_pkg }} state=restarted
+  - name: CopyBkupFile
+    copy: src=files/mysqlbkup.sql dest={{ dbinstalldir }}/mysqlbkup.sql owner=root group=root mode=755
+  - name: CreateRemoteDB
+    shell: mysqladmin -uroot -ppassword123 create {{ dbinstancename }}
+    register: result
+  - name: DisplayCreationResults
+    debug: var=result
+  - name: RestoreRemoteDB
+    shell: mysql -u root -ppassword123 {{ dbinstancename }} < {{ dbinstalldir }}/mysqlbkup.sql
+    register: result
+  - name: TestDBResults
+    shell: mysql -u root -ppassword123 -e 'SHOW DATABASES;'
+    register: mysqlresult
+  - name: ShowDBResults
+    debug: var=mysqlresult

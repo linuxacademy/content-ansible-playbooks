@@ -1,0 +1,13 @@
+--- # Gather EC2 Facts from my remote instance(s)
+- hosts: aws
+  remote_user: ec2-user
+  become: yes
+  connection: ssh
+  gather_facts: yes
+  tasks:
+  - name: Gather the EC2 Facts about running instance(s)
+    ec2_facts:
+    register: all_facts
+  - name: Display the facts 
+    debug: var=all_facts
+

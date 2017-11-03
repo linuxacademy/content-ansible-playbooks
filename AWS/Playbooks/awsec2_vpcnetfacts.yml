@@ -1,0 +1,19 @@
+--- # AWS EC2 VPC NET FACTS EXAMPLE
+- hosts: localhost
+  connection: local
+  remote_user: test
+  become: yes
+  gather_facts: no
+  vars_files:
+  - files/awscreds.yml
+  tasks: 
+  - name: Get Information about our VPCs
+    ec2_vpc_net_facts:
+      aws_access_key: "{{ aws_id }}"
+      aws_secret_key: "{{ aws_key }}"
+      region: "{{ aws_region }}"
+      filters:
+        vpc-id: vpc-11727674
+    register: vpcnetfacts
+  - name: Print out the facts
+    debug: var={{ vpcnetfacts.vpcs[0].id }}

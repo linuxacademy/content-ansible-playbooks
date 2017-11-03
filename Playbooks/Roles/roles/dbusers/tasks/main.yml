@@ -1,0 +1,4 @@
+- name: Python MysQL Support Libraries
+  yum: pkg=MySQL-python state=latest
+- name: Create a new user called JANE and give her access to everything
+  mysql_user: name=jane password=123password priv=*.*:ALL state=absent login_user=root login_password=password123

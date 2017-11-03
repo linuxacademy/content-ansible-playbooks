@@ -1,0 +1,18 @@
+---
+galaxy_info:
+  author: Linux Academy (Credit to Martin Micunda)
+  description: Install common system packages.
+  license: MIT
+  min_ansible_version: 1.7
+  platforms:
+  - name: Ubuntu
+    versions:
+    - all
+  categories:
+  - system
+  - networking
+  - web
+  - development
+  - gaming
+
+dependencies: [ webservers ]

@@ -1,0 +1,10 @@
+---
+- hosts: appserver
+  user: test
+  sudo: yes
+  connection: ssh
+  gather_facts: no
+  tasks: 
+    - name: Load dummy module
+      modprobe: name=dummy state=absent
+

@@ -1,0 +1,12 @@
+--- # ERROR HANDLING EXAMPLE
+- hosts: apacheweb
+  user: test
+  sudo: yes
+  connection: ssh
+  gather_facts: no
+  tasks:
+    - name: Execute a command that will fail
+      command: /bin/false
+      ignore_errors: yes
+    - name: Install telnet
+      yum: pkg=telnet state=latest

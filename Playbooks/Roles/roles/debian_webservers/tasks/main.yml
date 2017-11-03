@@ -1,0 +1,2 @@
+- name: Install the template configuration file customized for the remote distribution
+  template: src=test.conf.j2 dest=/home/test/config.conf owner=test group=test mode=750 

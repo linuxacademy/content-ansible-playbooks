@@ -1,0 +1,26 @@
+--- # EC2 METRIC ALARM MODULE EXAMPLE
+- hosts: localhost
+  connection: local
+  remote_user: test
+  become: yes
+  gather_facts:
+  vars_files:
+  - files/awscreds.yml
+  tasks:
+  - name: Create a Basic CPU Alarm
+    ec2_metric_alarm:
+      aws_access_key: "{{ aws_id }}"
+      aws_secret_key: "{{ aws_key }}"
+      region: "{{ aws_region }}"
+      state: present
+      name: OurFirstAlarmTest
+      metric: "CPUUtilization"
+      namespace: "AWS/EC2"
+      statistic: Average
+      comparison: ">="
+      threshold: 25.0
+      period: 300
+      evaluation_periods: 6
+      unit: "Percent"
+      description: "This alarm fires when CPU is greater than 25% for 30 minutes"
+      dimensions: {'InstanceID':'i-1da8b9d9'}

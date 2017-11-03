@@ -1,0 +1,7 @@
+--- # Master Playbook for Web Servers
+- hosts: debian
+  user: test
+  sudo: yes
+  connection: ssh
+  roles:
+    - debian_webservers

@@ -1,0 +1,8 @@
+--- # CRON MODULE EXAMPLE
+- hosts: apacheweb
+  user: test
+  connection: ssh
+  gather_facts: no
+  tasks:
+    - name: Add a CRON Job to the Test User
+      cron: name="list dirs" minute="0" hour="1" job="ls -al /var/log > /home/test/cron.log" 

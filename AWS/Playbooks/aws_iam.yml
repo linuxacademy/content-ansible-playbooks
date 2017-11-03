@@ -1,0 +1,25 @@
+--- # AWS IAM MODULE EXAMPLE
+- hosts: localhost
+  connection: local
+  remote_user: test
+  become: yes
+  gather_facts: no
+  vars_files:
+  - files/awscreds.yml
+  tasks:
+  - name: Create a couple of IAM Users
+    iam:
+      aws_access_key: "{{ aws_id }}"
+      aws_secret_key: "{{ aws_key }}"
+      region: "{{ aws_region }}"
+      iam_type: user
+      name: "{{ item }}"
+      state: present
+      password: "password"
+      access_key_state: create
+    with_items:
+    - tmp1
+    - tmp2
+    register: output
+  - name: Show the JSON Results
+    debug: var=output

@@ -1,0 +1,9 @@
+--- # GROUP MODULE EXAMPLE
+- hosts: apacheweb
+  user: test
+  sudo: yes
+  connection: ssh
+  gather_facts: no
+  tasks: 
+    - name: Add a new group called newgroup
+      group: name=newgroup state=absent

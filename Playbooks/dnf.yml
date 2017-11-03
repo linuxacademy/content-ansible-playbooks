@@ -1,0 +1,10 @@
+--- # DNF MODULE EXAMPLE
+- hosts: apacheweb
+  user: test
+  sudo: yes
+  connection: ssh
+  gather_facts: no
+  tasks:
+    - name: DNF Update
+      dnf: name="@Development tools" state=present
+

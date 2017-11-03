@@ -1,0 +1,6 @@
+copyright_msg: Copyright2015
+redhat_apache: httpd
+debian_apache: apache2
+userName: test
+userPassword: password5678
+connectionType: FTP

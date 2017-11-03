@@ -1,0 +1,7 @@
+dbserver_pkg: mariadb-server
+dbclient_pkg: mariadb
+dbserver_fqdn: tcox5.mylabserver.com
+dbinstalldir: /var/lib
+dbinstancename: MyDBTest
+dbdistribution: RedHat
+dbversion: 5.5.44

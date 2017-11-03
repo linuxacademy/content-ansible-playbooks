@@ -1,0 +1,18 @@
+--- # EC2 VOL MODULE EXAMPLE
+- hosts: localhost
+  connection: local
+  remote_user: test
+  become: yes
+  gather_facts: no
+  vars_files:
+  - files/awscreds.yml
+  tasks:
+  - name: Create a new volume and attach to running instance
+    ec2_vol:
+      aws_access_key: "{{ aws_id }}"
+      aws_secret_key: "{{ aws_key }}"
+      region: "{{ aws_region }}"
+      instance: i-1da8b9d9
+      state: list
+    register: volume_result
+  - debug: msg={{ volume_result }}

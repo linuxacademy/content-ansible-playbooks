@@ -1,0 +1,9 @@
+--- # SELINUX MODULE EXAMPLE
+- hosts: apacheweb
+  user: test
+  sudo: yes
+  connection: ssh
+  gather_facts: no
+  tasks:
+    - name: Change SELinux Configuration to Permissive
+      selinux: policy=targeted state=permissive
